@@ -7,6 +7,7 @@ import PHSelect from "../../../components/form/PHSelect";
 import { monthOptions } from "../../../constant/global";
 import { useAddAcademicSemesterMutation } from "../../../redux/feature/admin/academicManagement.api";
 import { academicSemesterSchema } from "../../../schema/academicManagement.schema";
+import { TResponse } from "../../../types/global";
 
 const nameOptions = [
   {
@@ -45,9 +46,9 @@ const CreateAcademicSemester = () => {
     };
 
     try {
-      const res = await addAcademicSemester(semesterData);
+      const res = (await addAcademicSemester(semesterData)) as TResponse;
       if (res.error) {
-        toast.error(res.error.data.errorSources[0].message, { id: toastId });
+        toast.error(res?.error?.data?.errorSources[0].message, { id: toastId });
       } else {
         toast.success("Semester is created", { id: toastId });
       }
