@@ -1,8 +1,7 @@
 import { Button, Table, TableColumnsType, TableProps } from "antd";
 import { useState } from "react";
 import { useGetAllSemesterQuery } from "../../../redux/feature/admin/academicManagement.api";
-import { TQueryParam } from "../../../types";
-import { TAcademicSemester } from "../../../types/academicSemester.types";
+import { TAcademicSemester, TQueryParam } from "../../../types";
 
 export type TTableData = Pick<
   TAcademicSemester,
@@ -77,7 +76,9 @@ const AcademicSemester = () => {
       render: () => {
         return (
           <>
-            <Button>Update</Button>
+            <Button type="primary" size="middle">
+              Update
+            </Button>
           </>
         );
       },

@@ -4,10 +4,11 @@ import { Controller } from "react-hook-form";
 type PHSelect = {
   label: string;
   name: string;
-  options: { value: string; label: string; disabled?: boolean }[];
+  disabled?: boolean;
+  options: { value: string; label: string; disabled?: boolean }[] | undefined;
 };
 
-const PHSelect = ({ label, name, options }: PHSelect) => {
+const PHSelect = ({ label, name, options, disabled }: PHSelect) => {
   return (
     <Controller
       name={name}
@@ -17,7 +18,8 @@ const PHSelect = ({ label, name, options }: PHSelect) => {
             style={{ width: "100%" }}
             {...field}
             options={options}
-            size="large"
+            size="middle"
+            disabled={disabled}
           />
           {error && <small style={{ color: "red" }}>{error.message}</small>}
         </Form.Item>
