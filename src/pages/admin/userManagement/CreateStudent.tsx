@@ -1,5 +1,5 @@
-import { Button, Col, Divider, Row } from "antd";
-import { FieldValues, SubmitHandler } from "react-hook-form";
+import { Button, Col, Divider, Form, Input, Row } from "antd";
+import { Controller, FieldValues, SubmitHandler } from "react-hook-form";
 import PHDatePicker from "../../../components/form/PHDatePicker";
 import PHForm from "../../../components/form/PHForm";
 import PHInput from "../../../components/form/PHInput";
@@ -21,7 +21,7 @@ const defaultValues = {
     lastName: "Islam",
   },
   gender: "male",
-  // dateOfBirth: "1990-01-01",
+
   bloodGroup: "A+",
 
   email: "redwan@gmail.com",
@@ -56,14 +56,14 @@ const CreateStudent = () => {
   const { data: sData, isLoading: sIsLoading } =
     useGetAllSemesterQuery(undefined);
 
-  const { data: dDeta, isLoading: dIsLoading } =
+  const { data: dData, isLoading: dIsLoading } =
     useGetAcademicDepartmentsQuery(undefined);
 
   const semesterOptions = sData?.data?.map((item) => ({
     value: item._id,
     label: `${item.name} ${item.year}`,
   }));
-  const departmentOptions = dDeta?.data?.map((item) => ({
+  const departmentOptions = dData?.data?.map((item) => ({
     value: item._id,
     label: item.name,
   }));
@@ -77,6 +77,9 @@ const CreateStudent = () => {
     const formData = new FormData();
 
     formData.append("data", JSON.stringify(studentData));
+    formData.append("file", data?.profileImg);
+
+    console.log(data);
 
     addStudent(formData);
   };
@@ -112,6 +115,22 @@ const CreateStudent = () => {
                 options={bloodGroupOptions}
                 name="bloodGroup"
                 label="Blood Group"
+              />
+            </Col>
+
+            <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+              <Controller
+                name="profileImg"
+                render={({ field: { onChange, value, ...field } }) => (
+                  <Form.Item label="Picture">
+                    <Input
+                      value={value?.fileName}
+                      type="file"
+                      {...field}
+                      onChange={(e) => onChange(e?.target?.files?.[0])}
+                    />
+                  </Form.Item>
+                )}
               />
             </Col>
           </Row>
