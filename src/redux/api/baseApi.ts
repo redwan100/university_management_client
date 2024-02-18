@@ -34,6 +34,10 @@ const baseQueryWithRefreshToken: BaseQueryFn<
     toast.error(result?.error?.data?.message);
   }
 
+  if (result?.error?.status === 403) {
+    toast.error(result?.error?.data?.message);
+  }
+
   if (result?.error?.status === 400) {
     const res = await fetch("http://localhost:5000/api/v1/auth/refresh-token", {
       method: "POST",
@@ -63,5 +67,6 @@ const baseQueryWithRefreshToken: BaseQueryFn<
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: baseQueryWithRefreshToken,
+  tagTypes: ["semester", "course", "offeredCourse"],
   endpoints: () => ({}),
 });

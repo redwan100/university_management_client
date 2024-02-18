@@ -32,8 +32,43 @@ const userManagementApi = baseApi.injectEndpoints({
         body: payload,
       }),
     }),
+
+    getAllFaculty: builder.query({
+      query: (args) => {
+        const params = new URLSearchParams();
+
+        if (args) {
+          args.forEach((item: TQueryParam) => {
+            params.append(item.name, item.value as string);
+          });
+        }
+        return {
+          url: "/faculties",
+          method: "GET",
+          params: params,
+        };
+      },
+      transformResponse: (response: TResponseRedux<TStudent[]>) => {
+        return {
+          data: response.data,
+          meta: response.meta,
+        };
+      },
+    }),
+
+    changePassword: builder.mutation({
+      query: (payload) => ({
+        url: "/auth/change-password",
+        method: "POST",
+        body: payload,
+      }),
+    }),
   }),
 });
 
-export const { useAddStudentMutation, useGetAllStudentsQuery } =
-  userManagementApi;
+export const {
+  useAddStudentMutation,
+  useGetAllStudentsQuery,
+  useGetAllFacultyQuery,
+  useChangePasswordMutation,
+} = userManagementApi;

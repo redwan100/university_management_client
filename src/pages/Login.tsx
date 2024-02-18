@@ -18,7 +18,6 @@ const Login = () => {
   const onSubmit = async (data: FieldValues) => {
     const toastId = toast.loading("Logging in");
 
-    console.log(data);
     try {
       const userInfo = {
         id: data.id,
@@ -30,15 +29,20 @@ const Login = () => {
 
       dispatch(setUser({ user, token: res?.data?.accessToken }));
       toast.success("Login successful", { id: toastId });
-      navigate(`/${user.role}/dashboard`);
+
+      if (res?.data?.needsPasswordChange) {
+        navigate(`/change-password`);
+      } else {
+        navigate(`/${user.role}/dashboard`);
+      }
     } catch (error) {
       toast.error("Something went wrong", { id: toastId });
     }
   };
 
   const defaultValues = {
-    id: "A-0002",
-    password: "admin123",
+    id: "2024020001",
+    password: "student123",
   };
 
   return (

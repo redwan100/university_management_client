@@ -2,7 +2,7 @@ import MainLayout from "./components/layouts/MainLayout";
 import ProtectedRout from "./components/layouts/ProtectedRout";
 const App = () => {
   return (
-    <ProtectedRout>
+    <ProtectedRout role={undefined}>
       <MainLayout />
     </ProtectedRout>
   );
